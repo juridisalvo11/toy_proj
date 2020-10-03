@@ -1,0 +1,67 @@
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+section {
+    margin-bottom: 100px;
+}
+
+.create-event {
+    background-color: lightblue;
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+
+.row {
+    justify-content: center;
+}
+
+
+.filter-input {
+    margin-right: 40px;
+}
+
+.table a {
+    text-decoration: none;
+    color: black;
+}
+
+//show
+
+#card-box {
+    color: black;
+    margin-top: 15px;
+}
+
+.card {
+    height: 18rem;
+    background-color: lightblue;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+@media screen and (min-width: 578px) {
+
+    .filters-list {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .every-year {
+        display: none;
+    }
+
+    .filter-input {
+        margin-right: 10px;
+    }
+
+    .event-list {
+        display: block;
+    }
+}
