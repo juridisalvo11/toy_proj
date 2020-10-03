@@ -27,10 +27,9 @@
                             <button type="submit" class="btn btn-primary">Add Event</button>
                             <input type="checkbox" aria-label="Checkbox for following text input"> Every year
                         </form>
-                    </div>                
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 @endsection
-

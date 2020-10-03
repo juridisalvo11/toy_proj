@@ -8,12 +8,13 @@ import 'bootstrap';
 const Handlebars = require("handlebars");
 
  $(document).ready(function() {
-
+   //Intercetto il click sul tasto filtra
     $('#filter-button').click(function() {
+      //vado a leggere i valori inseriti negli input title e date
         var title = $('#eventTitle').val();
         var date_from = $("#eventDateFrom").val();
         var date_to = $("#eventDateto").val();
-
+        //faccio partire una chiamata ajax per recuperare gli eventi filtrati
         $.ajax({
             "url": "http://localhost:8000/api/filter/events",
                  "method": "GET",
@@ -23,14 +24,9 @@ const Handlebars = require("handlebars");
                      "end": date_to
                  },
                  "success": function(data) {
+                   //imposto il template dove andrò ad inserire i dati recuperati
                    var source   = document.getElementById("event-template").innerHTML;
                    var template = Handlebars.compile(source);
-                     console.log(data);
-                    //svuoto il contenuto della pagina
-                    $(".events-table").html("");
-                    $(".normal").html("");
-                    $(".no-result").remove();
-                    // se i risultati sono maggiori di 0 inserisco gli appartamenti in pagina
                        //svuoto il contenuto della pagina
                        $(".event-template").html("");
                        if (data.length > 0) {
@@ -52,23 +48,20 @@ const Handlebars = require("handlebars");
                      },
               })
     })
-
+    //intercetto il click sul tasto copy
     $('.copyText').click(function() {
+      //vado a recuperare i valori per quanto riguarda titolo e data
         var name = $(this).closest('tr').find('.titleCopy').text();
         var date = $(this).closest('tr').find('.dateCopy').text();
 
+        //imposto il modo in cui voglio che i valori mi vengano restituiti
         var copy_text = name + ' - ' + date;
 
+        //creo un'input da cui poter copiare titolo e data sotto forma di stringa per poterla riutilizzare, infine  rimuovo l'input
         var $temp = $("<input>");
             $("body").append($temp);
             $temp.val(copy_text).select();
             document.execCommand("copy");
             $temp.remove();
     })
-
-
-
-
-
-
  })

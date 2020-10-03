@@ -42356,10 +42356,13 @@ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"
 var Handlebars = __webpack_require__(/*! handlebars */ "./node_modules/handlebars/dist/cjs/handlebars.js");
 
 $(document).ready(function () {
+  //Intercetto il click sul tasto filtra
   $('#filter-button').click(function () {
+    //vado a leggere i valori inseriti negli input title e date
     var title = $('#eventTitle').val();
     var date_from = $("#eventDateFrom").val();
-    var date_to = $("#eventDateto").val();
+    var date_to = $("#eventDateto").val(); //faccio partire una chiamata ajax per recuperare gli eventi filtrati
+
     $.ajax({
       "url": "http://localhost:8000/api/filter/events",
       "method": "GET",
@@ -42369,14 +42372,9 @@ $(document).ready(function () {
         "end": date_to
       },
       "success": function success(data) {
+        //imposto il template dove andrò ad inserire i dati recuperati
         var source = document.getElementById("event-template").innerHTML;
-        var template = Handlebars.compile(source);
-        console.log(data); //svuoto il contenuto della pagina
-
-        $(".events-table").html("");
-        $(".normal").html("");
-        $(".no-result").remove(); // se i risultati sono maggiori di 0 inserisco gli appartamenti in pagina
-        //svuoto il contenuto della pagina
+        var template = Handlebars.compile(source); //svuoto il contenuto della pagina
 
         $(".event-template").html("");
 
@@ -42398,11 +42396,15 @@ $(document).ready(function () {
         alert('errore');
       }
     });
-  });
+  }); //intercetto il click sul tasto copy
+
   $('.copyText').click(function () {
+    //vado a recuperare i valori per quanto riguarda titolo e data
     var name = $(this).closest('tr').find('.titleCopy').text();
-    var date = $(this).closest('tr').find('.dateCopy').text();
-    var copy_text = name + ' - ' + date;
+    var date = $(this).closest('tr').find('.dateCopy').text(); //imposto il modo in cui voglio che i valori mi vengano restituiti
+
+    var copy_text = name + ' - ' + date; //creo un'input da cui poter copiare titolo e data sotto forma di stringa per poterla riutilizzare, infine  rimuovo l'input
+
     var $temp = $("<input>");
     $("body").append($temp);
     $temp.val(copy_text).select();

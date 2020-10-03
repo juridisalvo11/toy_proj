@@ -14,7 +14,9 @@ class EventController extends Controller
      */
     public function index(Request $request)
     {
+      //Recupero tutti gli eventi ordinandoli per data di creazione
         $events = Event::all()->sortBy('created_at');
+        //ritorno alla view homepage
         return view('list', compact('events'));
     }
 
@@ -25,6 +27,7 @@ class EventController extends Controller
      */
     public function create(Request $request)
     {
+        //ritorno la view per creare un nuovo evento
         return view('events.create');
     }
 
@@ -36,12 +39,15 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        //recupero i dati
           $data = $request->all();
-
+          //creo un nuov evento
           $new_event = new Event();
+          //vado a riempire il database con i dati
           $new_event->fill($data);
+          //salvo i dati nel database
           $new_event->save();
-
+          //una volta salvati i dati faccio un redirect all'homepage
           return redirect()->route('list');
     }
 
@@ -53,7 +59,9 @@ class EventController extends Controller
      */
     public function show($id)
     {
+        //recupero il singolo evento tramite l'id
         $event = Event::find($id);
+        //ritorno la view show con i dettagli del singolo evento
         return view('events.show', compact('event'));
     }
 
@@ -65,7 +73,9 @@ class EventController extends Controller
      */
     public function edit($id)
     {
+        //recupero il singolo evento tramite l'id
         $event = Event::find($id);
+        //ritorno la view edit per modificare il singolo evento
         return view('events.edit', compact('event'));
     }
 
@@ -78,9 +88,13 @@ class EventController extends Controller
      */
     public function update(Request $request, $event)
     {
+        //recupero i dati
            $dati = $request->all();
+           //cerco il singolo evento da modificare
            $event = Event::find($event);
+           //modifico il singolo evento
            $event->update($dati);
+           //faccio un redirect all'homepage
            return redirect()->route('list');
 
     }
@@ -92,11 +106,11 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        $event = Event::find($id);
-
+    {     //recupero il singolo evento tramite l'id
             $event = Event::find($id);
+            // elimino l'evento
             $event->delete();
+            //faccio un redirect all'homepage
             return redirect()->route('list');
     }
 }
