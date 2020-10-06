@@ -11,7 +11,7 @@ const Handlebars = require("handlebars");
    //Intercetto il click sul tasto filtra
     $('#filter-button').click(function() {
       //vado a leggere i valori inseriti negli input title e date
-        var title = $('#eventTitle').val();
+        var title = $('#eventTitleSearch').val();
         var date_from = $("#eventDateFrom").val();
         var date_to = $("#eventDateto").val();
         //faccio partire una chiamata ajax per recuperare gli eventi filtrati
@@ -28,7 +28,9 @@ const Handlebars = require("handlebars");
                    var source   = document.getElementById("event-template").innerHTML;
                    var template = Handlebars.compile(source);
                        //svuoto il contenuto della pagina
-                       $(".event-template").html("");
+                       //$(".event-template").html("");
+                       $(".events-table").html("");
+                       $(".no-result").remove("");
                        if (data.length > 0) {
                            for (var i = 0; i < data.length; i++) {
                                var current_event = data.results[i];
@@ -41,6 +43,8 @@ const Handlebars = require("handlebars");
                                var html_finale = template(context);
                                $(".box-template").append(html_finale);
                            }
+                       }else if($('.events-table td').length == 0){
+                           $(".events-table").append("<h3 class='no-result'>Nessun evento trovato</h3>");
                        }
                     },
                      "error": function() {
