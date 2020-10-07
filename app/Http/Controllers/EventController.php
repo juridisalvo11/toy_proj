@@ -41,6 +41,11 @@ class EventController extends Controller
     {
         //recupero i dati
           $data = $request->all();
+          if(isset($request->every_year)) {
+            $data['every_year'] = true;
+          } else {
+            $data['every_year'] = false;
+          }
           //creo un nuov evento
           $new_event = new Event();
           //vado a riempire il database con i dati

@@ -8,6 +8,20 @@ import 'bootstrap';
 const Handlebars = require("handlebars");
 
  $(document).ready(function() {
+
+   $('#eventTitleSearch').keyup(function() {
+     $('tbody tr').each(function() {
+       var input_text = $('#eventTitleSearch').val().trim();
+       console.log(input_text);
+       var current_title = $(this).find('.titleCopy').text().toLowerCase().trim();
+       console.log(current_title);
+       if (current_title.includes(input_text)) {
+         $(this).show();
+       } else {
+         $(this).hide();
+       }
+     })
+   })
    //Intercetto il click sul tasto filtra
     $('#filter-button').click(function() {
       //vado a leggere i valori inseriti negli input title e date
@@ -24,11 +38,12 @@ const Handlebars = require("handlebars");
                      "end": date_to
                  },
                  "success": function(data) {
+                   console.log(data);
                    //imposto il template dove andrò ad inserire i dati recuperati
                    var source   = document.getElementById("event-template").innerHTML;
                    var template = Handlebars.compile(source);
-                       //svuoto il contenuto della pagina
-                       //$(".event-template").html("");
+                      // svuoto il contenuto della pagina
+                       $(".event-template").html("");
                        $(".events-table").html("");
                        $(".no-result").remove("");
                        if (data.length > 0) {
@@ -38,10 +53,12 @@ const Handlebars = require("handlebars");
                                    id : current_event.id,
                                    title: current_event.title,
                                    description : current_event.description,
-                                   date: current_event.event_date
+                                   date: current_event.event_date,
+                                   every_year: (current_event.every_year == 0) ? 'no' : 'si'
                                }
+                               console.log(current_event.every_year);
                                var html_finale = template(context);
-                               $(".box-template").append(html_finale);
+                               $(".events-table").after(html_finale);
                            }
                        }else if($('.events-table td').length == 0){
                            $(".events-table").append("<h3 class='no-result'>Nessun evento trovato</h3>");

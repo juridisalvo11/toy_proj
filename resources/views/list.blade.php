@@ -30,7 +30,7 @@
                                                   <input type="date" name="event_date" class="form-control" id="eventDate">
                                               </div>
                                               <button type="submit" class="btn btn-primary">Add Event</button>
-                                              <input type="checkbox" aria-label="Checkbox for following text input"> Every year
+                                              <input id="checkbox-year" type="checkbox" name="every_year" value="ogni_anno"> Every year
                                           </form>
                                       </div>
                                   </div>
@@ -73,7 +73,7 @@
                 <div class="col-12">
                     <table class="table">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th>
                                     <a href="">ID</a>
                                 </th>
@@ -87,17 +87,21 @@
                                     <a href="">Date</a>
                                 </th>
                                 <th>
+                                    <a href="">Every year</a>
+                                </th>
+                                <th>
                                     <a href="">Actions</a>
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="events-table">
                             @foreach ($events as $event)
-                            <tr>
+                            <tr class="text-center">
                                 <td>{{$event->id}}</td>
                                 <td class="titleCopy" value="title-copy">{{$event->title}}</td>
                                 <td>{{$event->description}}</td>
                                 <td class="dateCopy" value="date-copy">{{$event->event_date}}</td>
+                                <td class="every_year_choose">{{($event->every_year == 0) ? 'no' : 'si'}}</td>
                                 <td>
                                     <button class="copyText">
                                         <i class="fas fa-copy"></i>
@@ -120,32 +124,26 @@
         </div>
         <div class="box-template">
           <script id="event-template" type="text/x-handlebars-template">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <table class="table">
-                    <tbody class="events-table">
-                      <td>@{{id}}</td>
-                      <td class="titleCopy" value="title-copy">@{{title}}</td>
-                      <td>@{{description}}</td>
-                      <td class="dateCopy" value="date-copy">@{{date}}</td>
-                      <td>
-                          <button class="copyText">
-                              <i class="fas fa-copy"></i>
-                          </button>
-                          <a class="btn btn-info btn-sm" href="{{route('events.show', ['event' => $event->id])}}">Details</a>
-                          <a class="btn btn-warning btn-sm" href="{{route('events.edit', ['event' => $event->id])}}">Edit</a>
-                          <form class="d-inline" action="{{route('events.destroy', ['event' => $event->id])}}"
-                          method="post">
-                              @csrf
-                              @method('DELETE')
-                              <button class="btn btn-danger btn-sm" type="submit" name="button">Delete</button>
-                          </form>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
+                      <tr class="text-center">
+                        <td>@{{id}}</td>
+                        <td class="titleCopy" value="title-copy">@{{title}}</td>
+                        <td>@{{description}}</td>
+                        <td class="dateCopy" value="date-copy">@{{date}}</td>
+                        <td class="every_year_choose">@{{every_year}}</td>
+                        <td>
+                            <button class="copyText">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <a class="btn btn-info btn-sm" href="localhost:8000/events/@{{id}}">Details</a>
+                            <a class="btn btn-warning btn-sm" href="localhost:8000/events/@{{id}}/edit">Edit</a>
+                            <form class="d-inline" action="localhost:8000/events/@{{id}}"
+                            method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger btn-sm" type="submit" name="button">Delete</button>
+                            </form>
+                          </td>
+                      </tr>
           </script>
         </div>
     </section>
