@@ -6,8 +6,8 @@
         <div class="container">
             <div class="row">
                 <div clas="col-12">
-                    <div>
-                        <h1>Modifica evento</h1>
+                    <div class="text-center">
+                        <h1>Event edit</h1>
                     </div>
                     <div>
                         <form action="{{route('events.update', ['event' => $event->id])}}" method="post">
