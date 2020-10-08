@@ -10941,7 +10941,7 @@ section {
 @media screen and (min-width: 578px) {
   .filters-list {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
   }
 }
 

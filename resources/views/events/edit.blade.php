@@ -7,17 +7,8 @@
             <div class="row">
                 <div clas="col-12">
                     <div>
-                        <h1>Inserisci nuovo evento</h1>
+                        <h1>Modifica evento</h1>
                     </div>
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
                     <div>
                         <form action="{{route('events.update', ['event' => $event->id])}}" method="post">
                         @method('PUT')
@@ -25,9 +16,6 @@
                             <div class="form-group">
                                 <label for="eventTitle">Insert event title :</label>
                                 <input type=text class="form-control" name="title" value="{{$event->title}}" id="event-title">
-                                @error('title')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="eventDescription">Insert event description :</label>
@@ -36,17 +24,13 @@
                             <div class="form-group">
                                 <label for="eventDate">Insert event date :</label>
                                 <input type="date" class="form-control" name="event_date" id="eventDate" value="{{$event->event_date}}">
-                                @error('title')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary">Update event</button>
-                            <input type="checkbox" aria-label="Checkbox for following text input"> Every year
+                            <button type="submit" class="btn btn-primary">Add Event</button>
+                            <input id="checkbox-year" type="checkbox" name="every_year" value="ogni_anno" {{old('every_year', $event->every_year) ? 'checked' : ''}}> Every year
                         </form>
-                    </div>                
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 @endsection
-

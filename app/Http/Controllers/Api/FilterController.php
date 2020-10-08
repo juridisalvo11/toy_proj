@@ -10,8 +10,10 @@ class FilterController extends Controller
 {
     public function event(Request $request)
     {
-        //Imposto la query per filtrare gli evnti per nome e data
+        //Imposto le query per filtrare gli evnti per nome e data
+        //Verifico che la variabile non sia nulla
         if(isset($request->begin)) {
+          //Verifico la presenza dell'evento
           if(isset($events)) {
             $events = $events->where('event_date', '>', $request->begin);
           }else {

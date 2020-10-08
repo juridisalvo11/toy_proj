@@ -52,15 +52,15 @@
                                     <label for="eventDate">To :</label>
                                     <input type="date" name="end" class="form-control" id="eventDateto">
                                 </div>
-                                {{-- <div class="form-group every-year">
-                                <label for="everyYear">Every Year :</label>
-                                <input class="d-block" type="checkbox" name="everyYear">
-                                </div> --}}
                             </div>
-                            <div class="text-center">
-                                <button id="filter-button" class="btn btn-primary">Filter event</button>
+                            <div class="buttons d-flex justify-content-flex-start">
+                              <div class="text-center">
+                                  <button id="filter-button" class="btn btn-primary mr-3">Filter event</button>
+                              </div>
+                              <div class="text-center">
+                                  <button id="filter-reset" class="btn btn-primary">Reset filter</button>
+                              </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -96,12 +96,12 @@
                         </thead>
                         <tbody class="events-table">
                             @foreach ($events as $event)
-                            <tr class="text-center">
+                            <tr class="text-center events-list">
                                 <td>{{$event->id}}</td>
                                 <td class="titleCopy" value="title-copy">{{$event->title}}</td>
                                 <td>{{$event->description}}</td>
                                 <td class="dateCopy" value="date-copy">{{$event->event_date}}</td>
-                                <td class="every_year_choose">{{($event->every_year == 0) ? 'no' : 'si'}}</td>
+                                <td class="every_year_choose">{{($event->every_year == 0) ? '' : 'si'}}</td>
                                 <td>
                                     <button class="copyText">
                                         <i class="fas fa-copy"></i>
@@ -122,9 +122,8 @@
                 </div>
             </div>
         </div>
-        <div class="box-template">
           <script id="event-template" type="text/x-handlebars-template">
-                      <tr class="text-center">
+                      <tr class="text-center box-template">
                         <td>@{{id}}</td>
                         <td class="titleCopy" value="title-copy">@{{title}}</td>
                         <td>@{{description}}</td>
@@ -145,6 +144,5 @@
                           </td>
                       </tr>
           </script>
-        </div>
     </section>
 @endsection

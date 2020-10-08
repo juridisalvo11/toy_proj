@@ -94,11 +94,16 @@ class EventController extends Controller
     public function update(Request $request, $event)
     {
         //recupero i dati
-           $dati = $request->all();
+           $data = $request->all();
+           if(isset($request->every_year)) {
+             $data['every_year'] = true;
+           } else {
+             $data['every_year'] = false;
+           }
            //cerco il singolo evento da modificare
            $event = Event::find($event);
            //modifico il singolo evento
-           $event->update($dati);
+           $event->update($data);
            //faccio un redirect all'homepage
            return redirect()->route('list');
 

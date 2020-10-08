@@ -42356,12 +42356,11 @@ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"
 var Handlebars = __webpack_require__(/*! handlebars */ "./node_modules/handlebars/dist/cjs/handlebars.js");
 
 $(document).ready(function () {
+  //Imposto la ricerca del titolo in maniera dinamica in modo da far apparire i risultati mentre si sta scrivendo
   $('#eventTitleSearch').keyup(function () {
     $('tbody tr').each(function () {
       var input_text = $('#eventTitleSearch').val().trim();
-      console.log(input_text);
       var current_title = $(this).find('.titleCopy').text().toLowerCase().trim();
-      console.log(current_title);
 
       if (current_title.includes(input_text)) {
         $(this).show();
@@ -42372,51 +42371,63 @@ $(document).ready(function () {
   }); //Intercetto il click sul tasto filtra
 
   $('#filter-button').click(function () {
-    //vado a leggere i valori inseriti negli input title e date
+    //svuoto i contenitori contententi gli eventi
+    $(".box-template").html("");
+    $(".events-table").html("");
+    $(".no-result").remove(""); //vado a leggere i valori inseriti negli input title e date
+
     var title = $('#eventTitleSearch').val();
     var date_from = $("#eventDateFrom").val();
-    var date_to = $("#eventDateto").val(); //faccio partire una chiamata ajax per recuperare gli eventi filtrati
+    var date_to = $("#eventDateto").val();
 
-    $.ajax({
-      "url": "http://localhost:8000/api/filter/events",
-      "method": "GET",
-      "data": {
-        'title': title,
-        'begin': date_from,
-        "end": date_to
-      },
-      "success": function success(data) {
-        console.log(data); //imposto il template dove andrò ad inserire i dati recuperati
+    if ($('#eventTitleSearch').val().length == 0 && $('#eventDateFrom').val().length == 0 && $('#eventDateto').val().length == 0) {
+      $(".events-table").append("<h4 class='no-result'>seleziona almeno un parametro di ricerca</h4>");
+    } else {
+      //faccio partire una chiamata ajax per recuperare gli eventi filtrati
+      $.ajax({
+        "url": "http://localhost:8000/api/filter/events",
+        "method": "GET",
+        "data": {
+          'title': title,
+          'begin': date_from,
+          "end": date_to
+        },
+        "success": function success(data) {
+          console.log(data); //imposto il template dove andrò ad inserire i dati recuperati
 
-        var source = document.getElementById("event-template").innerHTML;
-        var template = Handlebars.compile(source); // svuoto il contenuto della pagina
+          var source = document.getElementById("event-template").innerHTML;
+          var template = Handlebars.compile(source); // svuoto il contenuto della pagina
 
-        $(".event-template").html("");
-        $(".events-table").html("");
-        $(".no-result").remove("");
-
-        if (data.length > 0) {
-          for (var i = 0; i < data.length; i++) {
-            var current_event = data.results[i];
-            var context = {
-              id: current_event.id,
-              title: current_event.title,
-              description: current_event.description,
-              date: current_event.event_date,
-              every_year: current_event.every_year == 0 ? 'no' : 'si'
-            };
-            console.log(current_event.every_year);
-            var html_finale = template(context);
-            $(".events-table").after(html_finale);
+          if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+              var current_event = data.results[i];
+              var context = {
+                id: current_event.id,
+                title: current_event.title,
+                description: current_event.description,
+                date: current_event.event_date,
+                every_year: current_event.every_year == 0 ? '' : 'si'
+              };
+              console.log(current_event.every_year);
+              var html_finale = template(context);
+              $(".events-table").after(html_finale);
+            }
+          } else if ($('.events-table td').length == 0) {
+            $(".events-table").append("<h3 class='no-result'>Nessun evento trovato</h3>");
           }
-        } else if ($('.events-table td').length == 0) {
-          $(".events-table").append("<h3 class='no-result'>Nessun evento trovato</h3>");
-        }
-      },
-      "error": function error() {
-        alert('errore');
-      }
-    });
+        },
+        "error": function error() {}
+      });
+    }
+  }); //Intercetto il click sul tasto filtra
+
+  $('#filter-reset').click(function () {
+    //svuoto i relativi input
+    var title = $('#eventTitleSearch').val("");
+    var date_from = $("#eventDateFrom").val("");
+    var date_to = $("#eventDateto").val(""); //ricarico la pagina mostrando la lista completa degli eventi
+
+    location.reload();
   }); //intercetto il click sul tasto copy
 
   $('.copyText').click(function () {
