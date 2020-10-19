@@ -3,6 +3,18 @@
 
 @section('content')
 <section class="event-order">
+      <div class="box-every-year">
+        <div class="every_year_event">
+          <div class="notification-event">
+            <span>Every year events : </span>
+            @foreach ($events as $event)
+              @if ($event->every_year == 1)
+              <span>{{$event->title}} ; </span>
+              @endif
+            @endforeach
+          </div>
+        </div>
+      </div>
         <div class="container">
             <div class="row">
                 <div class="col-12">

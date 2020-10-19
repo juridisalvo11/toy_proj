@@ -8,6 +8,12 @@ import 'bootstrap';
 const Handlebars = require("handlebars");
 
  $(document).ready(function() {
+
+   //Al click nascondo la sezione eventi annuali
+   $('.box-every-year').click(function(){
+     $(this).hide();
+   })
+
    //Imposto la ricerca del titolo in maniera dinamica in modo da far apparire i risultati mentre si sta scrivendo
    $('#eventTitleSearch').keyup(function() {
      $('tbody tr').each(function() {

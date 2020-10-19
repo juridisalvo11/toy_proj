@@ -42356,7 +42356,11 @@ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"
 var Handlebars = __webpack_require__(/*! handlebars */ "./node_modules/handlebars/dist/cjs/handlebars.js");
 
 $(document).ready(function () {
-  //Imposto la ricerca del titolo in maniera dinamica in modo da far apparire i risultati mentre si sta scrivendo
+  //Al click nascondo la sezione eventi annuali
+  $('.box-every-year').click(function () {
+    $(this).hide();
+  }); //Imposto la ricerca del titolo in maniera dinamica in modo da far apparire i risultati mentre si sta scrivendo
+
   $('#eventTitleSearch').keyup(function () {
     $('tbody tr').each(function () {
       var input_text = $('#eventTitleSearch').val().trim();

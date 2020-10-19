@@ -10903,6 +10903,45 @@ section {
   margin-bottom: 30px;
 }
 
+.every_year_event {
+  background-color: #0062cc;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.notification-event {
+  color: white;
+  text-transform: uppercase;
+  font-weight: 600;
+  width: 100%;
+  left: 500px;
+  -webkit-animation: slideIn 22s linear;
+  animation: slideIn 22s linear;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    transform: translateX(-900px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-500px);
+  }
+
+  100% {
+    transform: translateX(1500px);
+  }
+}
+
 .create-event {
   background-color: lightblue;
   padding-top: 30px;
