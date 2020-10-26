@@ -15,7 +15,7 @@ class EventController extends Controller
     public function index(Request $request)
     {
       //Recupero tutti gli eventi ordinandoli per data di creazione
-        $events = Event::all()->sortBy('event_date');
+        $events = Event::all()->sortBy('created_at');
         //ritorno alla view homepage
         return view('list', compact('events'));
     }
