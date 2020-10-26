@@ -89,6 +89,7 @@ const Handlebars = require("handlebars");
       //ricarico la pagina mostrando la lista completa degli eventi
       location.reload();
     })
+
     //intercetto il click sul tasto copy
     $('.copyText').click(function() {
       //vado a recuperare i valori per quanto riguarda titolo e data

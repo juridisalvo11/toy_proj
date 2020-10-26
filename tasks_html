@@ -1,0 +1,8 @@
+// far funzionare la ricerca parziale, con titolo(stringa parziale), oppure uno dei due input data.
+La ricerca deve tenere conto dei filtri selezionati e quelli non selezionati
+
+//la lista degli eventi deve trovare soltanto i risultati ricercati  e svuotare gli input (FATTO)
+
+//far funzionare la checkbox
+
+//aggiunta evento senza ricaricare la pagina (FATTO)

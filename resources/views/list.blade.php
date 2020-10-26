@@ -25,6 +25,15 @@
                                   <div clas="col-12">
                                       <div>
                                           <h1>Insert new event</h1>
+                                          @if ($errors->any())
+                                              <div class="alert alert-danger">
+                                                  <ul>
+                                                      @foreach ($errors->all() as $error)
+                                                          <li>{{ $error }}</li>
+                                                      @endforeach
+                                                  </ul>
+                                              </div>
+                                          @endif
                                       </div>
                                       <div>
                                           <form action="{{route('events.store')}}" method="post">
@@ -32,6 +41,9 @@
                                               <div class="form-group">
                                                   <label for="eventTitle">Insert event title :</label>
                                                   <input type=text class="form-control" name="title" id="eventTitle" placeholder="Event title">
+                                                  @error('title')
+                                                      <small class="text-danger">{{ $message }}</small>
+                                                  @enderror
                                               </div>
                                               <div class="form-group">
                                                   <label for="eventDescription">Insert event description :</label>
@@ -40,6 +52,9 @@
                                               <div class="form-group">
                                                   <label for="eventDate">Insert event date :</label>
                                                   <input type="date" name="event_date" class="form-control" id="eventDate">
+                                                  @error('event_date')
+                                                      <small class="text-danger">{{ $message }}</small>
+                                                  @enderror
                                               </div>
                                               <button type="submit" class="btn btn-primary">Add Event</button>
                                               <input id="checkbox-year" type="checkbox" name="every_year" value="ogni_anno"> Every year
@@ -72,6 +87,9 @@
                               <div class="text-center">
                                   <button id="filter-reset" class="btn btn-primary">Reset filter</button>
                               </div>
+                              {{-- <div class="ignore-year">
+                                  <input id="without-year" type="checkbox" name="ignore_year"> Ignore year
+                              </div> --}}
                             </div>
                         </div>
                     </div>
@@ -96,7 +114,7 @@
                                     <a href="">Description</a>
                                 </th>
                                 <th>
-                                    <a href="">Date</a>
+                                    <a id="date-order">Date</a>
                                 </th>
                                 <th>
                                     <a href="">Every year</a>

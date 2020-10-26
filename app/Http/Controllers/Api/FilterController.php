@@ -5,6 +5,7 @@ use App\Event;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class FilterController extends Controller
 {
@@ -12,29 +13,56 @@ class FilterController extends Controller
     {
         //Imposto le query per filtrare gli evnti per nome e data
         //Verifico che la variabile non sia nulla
-        if(isset($request->begin)) {
-          //Verifico la presenza dell'evento
-          if(isset($events)) {
-            $events = $events->where('event_date', '>', $request->begin);
-          }else {
-            $events = Event::where('event_date', '>', $request->begin);
+        // if($request->ignore_year == false) {
+          if(isset($request->begin)) {
+            //Verifico la presenza dell'evento
+            if(isset($events)) {
+              $events = $events->where('event_date', '>', $request->begin);
+            }else {
+              $events = Event::where('event_date', '>', $request->begin);
+            }
           }
-        }
-        if(isset($request->end)) {
-          if(isset($events)) {
-            $events = $events->where('event_date', '<', $request->end);
-          }else {
-            $events= Event::where('event_date', '<', $request->end);
-          }
+          if(isset($request->end)) {
+            if(isset($events)) {
+              $events = $events->where('event_date', '<', $request->end);
+            }else {
+              $events= Event::where('event_date', '<', $request->end);
+            }
 
-        }
-        if(isset($request->title)) {
-          if(isset($events)) {
-            $events = $events->where('title', '=', $request->title);
-          }else {
-            $events = Event::where('title', '=', $request->title);
           }
-        }
+          if(isset($request->title)) {
+            if(isset($events)) {
+              $events = $events->where('title', '=', $request->title);
+            }else {
+              $events = Event::where('title', '=', $request->title);
+            }
+          }
+        // } else {
+        //   if(isset($request->begin)) {
+        //     //Verifico la presenza dell'evento
+        //     if(isset($events)) {
+        //       $events = $events->where('event_date')->format('m-d')->where($request->begin)->format('m-d')->where('event_date', '>', $request->begin);
+        //     }else {
+        //       $events = Event::where('event_date')->format('m-d')->where($request->begin)->format('m-d')->where('event_date', '>', $request->begin);
+        //     }
+        //   }
+        //   if(isset($request->end)) {
+        //     if(isset($events)) {
+        //       $events = $events->where('event_date')->format('m-d')->where($request->begin)->format('m-d')->where('event_date', '>', $request->begin);
+        //     }else {
+        //       $events= Event::where('event_date')->format('m-d')->where($request->begin)->format('m-d')->where('event_date', '>', $request->begin);
+        //     }
+        //
+        //   }
+        //   if(isset($request->title)) {
+        //     if(isset($events)) {
+        //       $events = $events->where('title', '=', $request->title);
+        //     }else {
+        //       $events = Event::where('title', '=', $request->title);
+        //     }
+        //   }
+        //}
+
 
         if(isset($events)) {
           $events = $events->orderByDesc('created_at')->get();

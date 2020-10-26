@@ -15,7 +15,7 @@ class EventController extends Controller
     public function index(Request $request)
     {
       //Recupero tutti gli eventi ordinandoli per data di creazione
-        $events = Event::all()->sortBy('created_at');
+        $events = Event::all()->sortBy('event_date');
         //ritorno alla view homepage
         return view('list', compact('events'));
     }
@@ -39,6 +39,13 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+
+      //valido i dati pervenuti lato-cliet
+      $request->validate([
+          "title" => "required|string|max:255",
+          "description" => "nullable",
+          "event_date" => "required"
+          ]);
         //recupero i dati
           $data = $request->all();
           if(isset($request->every_year)) {
